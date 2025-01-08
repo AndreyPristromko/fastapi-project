@@ -23,8 +23,8 @@
   **Пример ответа:**
   ```json
   {
-  "short_id": "abc123",
-  "full_url": "https://example.com"
+    "short_id": "abc123",
+    "full_url": "https://example.com"
   }
   ```
 - `GET /{short_id}`
@@ -44,12 +44,98 @@
     "clicks": 10
   }
   ```
-  ### Запуск через Docker
-  1. Соберите Docker-образ:
-    ```bash
+### Запуск через Docker
+ Соберите Docker-образ:
+   ```bash
     docker build -t shorturl-service ./shorturl_app
-    ```
-  1. Запустите контейнер:
-    ```bash
+   ```
+ Запустите контейнер:
+   ```bash
     docker run -d -p 8001:80 -v shorturl_data:/app/data --name shorturl-service shorturl-service
-    ```  
+   ```
+## 2. TODO-сервис
+
+### Описание
+Сервис для управления списком задач: добавление, чтение, обновление и удаление задач.
+
+### Эндпоинты
+- `POST /items`  
+  **Описание:** Создать новую задачу.  
+  **Пример запроса:**  
+  ```json
+  {
+    "title": "Купить продукты",
+    "description": "Молоко, хлеб, сыр",
+    "completed": false
+  }
+  ```
+  **Пример ответа:**
+  ```json
+  {
+    "id": 1,
+    "title": "Купить продукты",
+    "description": "Молоко, хлеб, сыр",
+    "completed": false
+  }
+  ```
+- `GET /items`
+  **Описание:** Получить список всех задач.
+  **Пример ответа:**
+  ```json
+  [
+    {
+      "id": 1,
+      "title": "Купить продукты",
+      "description": "Молоко, хлеб, сыр",
+      "completed": false
+    }
+  ]
+  ```
+- `GET /items/{item_id}`
+  **Описание:** Получить задачу по её ID.
+  **Пример ответа:**
+  ```json
+  {
+    "id": 1,
+    "title": "Купить продукты",
+    "description": "Молоко, хлеб, сыр",
+    "completed": false
+  }
+  ```
+- `PUT /items/{item_id}`  
+  **Описание:** Обновить задачу по её ID.  
+  **Пример запроса:**  
+  ```json
+  {
+    "title": "Купить продукты и напитки",
+    "description": "Молоко, хлеб, сыр, вода",
+    "completed": true
+  }
+  ```
+  **Пример ответа:**
+  ```json
+  {
+    "message": "Task updated successfully"
+  }
+  ```
+- `DELETE /items/{item_id}`
+  **Описание:** Удалить задачу по её ID.
+  **Пример ответа:**
+  ```json
+  {
+    "message": "Task deleted successfully"
+  }
+  ```
+### Запуск через Docker
+Соберите Docker-образ:
+  ```bash
+   docker build -t todo-service ./todo_app
+  ```
+Запустите контейнер:
+  ```bash
+   docker run -d -p 8000:80 -v todo_data:/app/data --name todo-service todo-service
+  ```
+
+## Ссылки на образы Docker
+- ShortURL-сервис: 
+- TODO-сервис: 
